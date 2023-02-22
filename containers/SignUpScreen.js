@@ -11,14 +11,12 @@ import {
 import axios from "axios";
 import { useState } from "react";
 
-// https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/sign_up
-
 export default function SignUpScreen({ setToken }) {
-  const [email, setEmail] = useState("test44@mail.com");
-  const [username, setUsername] = useState("test44");
-  const [password, setPassword] = useState("azerty");
-  const [confirmPassword, setConfirmPassword] = useState("azertyy");
-  const [description, setDescription] = useState("je suis une description");
+  const [email, setEmail] = useState("mathias@mail.com");
+  const [username, setUsername] = useState("mathias31");
+  const [password, setPassword] = useState("mathias31");
+  const [confirmPassword, setConfirmPassword] = useState("mathias31");
+  const [description, setDescription] = useState("une description");
 
   const [error, setError] = useState("");
 
@@ -72,7 +70,6 @@ export default function SignUpScreen({ setToken }) {
         setError(message);
       }
     }
-    // setToken("39898DU983J8D9934");
   };
 
   return (
@@ -102,6 +99,7 @@ export default function SignUpScreen({ setToken }) {
             setPassword(input);
           }}
           placeholder="Your password"
+          secureTextEntry="true"
         />
         <TextInput
           style={styles.input}
@@ -109,15 +107,16 @@ export default function SignUpScreen({ setToken }) {
           onChangeText={(input) => {
             setConfirmPassword(input);
           }}
-          placeholder="COnfirm your password"
+          placeholder="Confirm your password"
+          secureTextEntry="true"
         />
         <TextInput
           style={styles.input}
           value={description}
+          placeholder="useless placeholder"
           onChangeText={(input) => {
             setDescription(input);
           }}
-          placeholder="Your description"
         />
 
         <Text style={{ color: "red", marginTop: 5 }}>{error}</Text>

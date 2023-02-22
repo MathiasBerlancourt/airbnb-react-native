@@ -1,30 +1,115 @@
 import { useNavigation } from "@react-navigation/core";
+import { useState } from "react";
 import { Button, Text, TextInput, View, TouchableOpacity } from "react-native";
-
+import { StyleSheet } from "react-native";
+import { ScrollView } from "react-native";
+import { Image } from "react-native";
+import axios from "axios";
+// https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/log_in
 export default function SignInScreen({ setToken }) {
+  const [email, setEmail] = useState("mathias@mail.com");
+  const [username, setUsername] = useState("mathias31");
+  const [password, setPassword] = useState("mathias31");
+
+  const [error, setError] = useState("");
+
   const navigation = useNavigation();
+
+  const submit = async () => {
+    try {
+      setError("");
+      if (!email || !password) {
+        setError("Tous les champs ne sont pas remplis");
+        return;
+        //un return pour ne pas que la requete se
+        //fasse si les champs de sont pas remplis, l'idée est de ne pas
+        //faire de requete pour rien
+      }
+      const response = await axios.post(
+        "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/log_in",
+        {
+          email: email,
+          password: password,
+        }
+      );
+      if (response.data) {
+        console.log(response.data);
+        setToken(response.data.token);
+      }
+    } catch (error) {
+      if (error.response.status === 401)
+        setError("mot de passe ou adresse email incorrecte");
+    }
+  };
+
   return (
-    <View>
-      <View>
-        <Text>Name: </Text>
-        <TextInput placeholder="Username" />
-        <Text>Password: </Text>
-        <TextInput placeholder="Password" secureTextEntry={true} />
-        <Button
-          title="Sign in"
-          onPress={async () => {
-            const userToken = "secret-token";
-            setToken(userToken);
+    <ScrollView>
+      <View style={styles.mainContainer}>
+        <Image style={styles.logo} source={require("../assets/logo.png")} />
+
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={(input) => {
+            setEmail(input);
           }}
+          placeholder="Your email"
         />
+
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={(input) => {
+            setPassword(input);
+          }}
+          placeholder="Your password"
+          secureTextEntry="true"
+        />
+        <Text style={{ color: "red", marginTop: 5 }}>{error}</Text>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("SignUp");
+            submit();
           }}
+          style={styles.btnSignIn}
         >
-          <Text>Create an account</Text>
+          <Text style={{ color: "white", fontWeight: "bold" }}>Sign In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+          <Text style={{ color: "gray", fontSize: "10" }}>
+            No account? Register
+          </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    alignItems: "center",
+    marginVertical: 25,
+  },
+  logo: {
+    width: 100,
+    height: 100,
+  },
+  input: {
+    borderBottomColor: "#ffbac0",
+    borderBottomWidth: 2,
+    height: 40,
+    width: 300,
+    marginTop: 40,
+    backgroundColor: "white",
+    placeholderTextColor: "#000000",
+  },
+  btnSignIn: {
+    backgroundColor: "#FF466C",
+    borderWidth: 1,
+    height: 50,
+    width: 200,
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 40,
+    borderRadius: 30,
+  },
+});
