@@ -41,8 +41,6 @@ export default function SignUpScreen({ setToken }) {
         setError("Les 2 mdp ne sont pas identiques !");
         return;
       }
-
-      // alert("Vérifications passées ! ");
       const response = await axios.post(
         "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/sign_up",
         {
@@ -63,9 +61,6 @@ export default function SignUpScreen({ setToken }) {
       // 4 - BACK  Vérifier que le username soit dispo
       const message = error.response.data.error;
       const statusCode = error.response.status;
-
-      // console.log(typeof error.response.status);
-      // console.log(message);
       if (statusCode === 400) {
         setError(message);
       }

@@ -1,14 +1,26 @@
 import { useNavigation } from "@react-navigation/core";
 import { useState } from "react";
-import { Button, Text, TextInput, View, TouchableOpacity } from "react-native";
+import {
+  Pressable,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native";
 import { Image } from "react-native";
+import { useTogglePasswordVisibility } from "../utils/useTogglePasswordVisibility";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import axios from "axios";
 // https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/log_in
 export default function SignInScreen({ setToken }) {
   const [email, setEmail] = useState("mathias@mail.com");
   const [username, setUsername] = useState("mathias31");
+
+  const { passwordVisibility, rightIcon, handlePasswordVisibility } =
+    useTogglePasswordVisibility();
   const [password, setPassword] = useState("mathias31");
 
   const [error, setError] = useState("");
@@ -46,7 +58,6 @@ export default function SignInScreen({ setToken }) {
     <ScrollView>
       <View style={styles.mainContainer}>
         <Image style={styles.logo} source={require("../assets/logo.png")} />
-
         <TextInput
           style={styles.input}
           value={email}
@@ -55,16 +66,28 @@ export default function SignInScreen({ setToken }) {
           }}
           placeholder="Your email"
         />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            value={password}
+            onChangeText={(input) => {
+              setPassword(input);
+            }}
+            placeholder="Your password"
+            secureTextEntry={passwordVisibility}
+          />
+          <Pressable
+            style={{ bottom: 30, left: 275 }}
+            onPress={handlePasswordVisibility}
+          >
+            <MaterialCommunityIcons
+              name={rightIcon}
+              size={22}
+              color="#232323"
+            />
+          </Pressable>
+        </View>
 
-        <TextInput
-          style={styles.input}
-          value={password}
-          onChangeText={(input) => {
-            setPassword(input);
-          }}
-          placeholder="Your password"
-          secureTextEntry="true"
-        />
         <Text style={{ color: "red", marginTop: 5 }}>{error}</Text>
         <TouchableOpacity
           onPress={() => {
@@ -92,6 +115,10 @@ const styles = StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
+  },
+  inputContainer: {
+    alignItems: "baseline",
+    position: "relative",
   },
   input: {
     borderBottomColor: "#ffbac0",
