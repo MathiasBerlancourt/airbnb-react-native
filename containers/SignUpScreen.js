@@ -104,6 +104,7 @@ export default function SignUpScreen({ setToken }) {
           }}
           placeholder="Confirm your password"
           secureTextEntry="true"
+          keyboardType="default"
         />
         <TextInput
           style={styles.input}

@@ -16,12 +16,11 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import axios from "axios";
 // https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/log_in
 export default function SignInScreen({ setToken }) {
-  const [email, setEmail] = useState("mathias@mail.com");
-  const [username, setUsername] = useState("mathias31");
+  const [email, setEmail] = useState("");
 
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
     useTogglePasswordVisibility();
-  const [password, setPassword] = useState("mathias31");
+  const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
 
@@ -98,7 +97,7 @@ export default function SignInScreen({ setToken }) {
           <Text style={{ color: "white", fontWeight: "bold" }}>Sign In</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-          <Text style={{ color: "gray", fontSize: "10" }}>
+          <Text style={{ color: "gray", fontSize: 10 }}>
             No account? Register
           </Text>
         </TouchableOpacity>
