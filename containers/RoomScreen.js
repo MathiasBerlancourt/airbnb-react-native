@@ -70,8 +70,8 @@ export const RoomScreen = ({ route }) => {
   );
 };
 
-// const styles = StyleSheet.create({
-//   imageRoom: {
-//     resizeMode: "contain",
-//   },
-// });
+const styles = StyleSheet.create({
+  imageRoom: {
+    resizeMode: "contain",
+  },
+});

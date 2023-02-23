@@ -11,6 +11,7 @@ import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { RoomScreen } from "./containers/RoomScreen";
+import { AroundMeScreen } from "./containers/AroundMeScreen";
 
 import SplashScreen from "./containers/SplashScreen";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
@@ -111,6 +112,32 @@ export default function App() {
                         {() => <ProfileScreen />}
                       </Stack.Screen> */
                   )}
+                </Tab.Screen>
+                <Tab.Screen
+                  name="TabAroundMe"
+                  options={{
+                    tabBarLabel: "Around Me",
+                    tabBarIcon: ({ color, size }) => (
+                      <MaterialCommunityIcons
+                        name="map-marker-outline"
+                        size={size}
+                        color={color}
+                      />
+                    ),
+                  }}
+                >
+                  {() => {
+                    return (
+                      <Stack.Navigator>
+                        <Stack.Screen
+                          name="AroundMe"
+                          options={{ title: "Around me" }}
+                        >
+                          {() => <AroundMeScreen />}
+                        </Stack.Screen>
+                      </Stack.Navigator>
+                    );
+                  }}
                 </Tab.Screen>
                 <Tab.Screen
                   name="TabProfile"
