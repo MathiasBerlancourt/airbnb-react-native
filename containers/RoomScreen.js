@@ -1,25 +1,34 @@
 import { useEffect, useState } from "react";
-import { ScrollView, Text, FlatList } from "react-native";
+import {
+  ScrollView,
+  Text,
+  FlatList,
+  View,
+  Button,
+  StyleSheet,
+  ActivityIndicator,
+  Image,
+} from "react-native";
 import axios from "axios";
 
 export const RoomScreen = ({ route }) => {
   const roomId = route.params.roomId;
-  console.log("roomId : ", roomId);
-  const [room, setRoom] = useState();
-  const [isLoading, setIsLoading] = useState("");
+
+  const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     try {
-      const fetchRoom = async () => {
-        const response = axios.get(
+      const fetchData = async () => {
+        const response = await axios.get(
           `https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/rooms/${roomId}`
         );
-        setRoom(response.data);
-        console.log("response.data:", response.data);
-        console.log("room:", room);
+        setData(response.data);
+        // console.log("response.data:", response.data);
+
         setIsLoading(false);
       };
-      fetchRoom();
+      fetchData();
     } catch (error) {
       console.log(error.message);
     }
@@ -28,16 +37,31 @@ export const RoomScreen = ({ route }) => {
   return isLoading === true ? (
     <ActivityIndicator />
   ) : (
-    <FlatList
-      data={room.photos}
-      renderItem={({ item }) => {
-        return (
-          <View>
-            <Image source={item.url} />
-          </View>
-        );
-      }}
-    />
+    // <Button title="log" onPress={() => console.log(data.photos)} />
+
+    <>
+      <Text>testtt</Text>
+      <FlatList
+        data={data.photos}
+        renderItem={({ item }) => {
+          return (
+            <View>
+              <Image
+                // style={styles.imageRoom}
+                source={{ uri: item.url }}
+                style={{
+                  width: 100,
+                  height: 100,
+                  resizeMode: "contain",
+                }}
+              />
+              <Text>{item.url}</Text>
+              <Text>Hello</Text>
+            </View>
+          );
+        }}
+      />
+    </>
 
     // <FlatList
     // data={response.data.photos}
@@ -45,3 +69,9 @@ export const RoomScreen = ({ route }) => {
     // <Image source={Item.photos.url}/>}
   );
 };
+
+// const styles = StyleSheet.create({
+//   imageRoom: {
+//     resizeMode: "contain",
+//   },
+// });

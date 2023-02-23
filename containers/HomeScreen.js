@@ -33,7 +33,7 @@ export default function HomeScreen({ navigation }) {
           "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/rooms"
         );
         setData(response.data);
-        console.log("response.data :", response.data);
+        // console.log("response.data :", response.data);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
