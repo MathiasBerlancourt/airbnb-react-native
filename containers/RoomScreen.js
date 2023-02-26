@@ -10,12 +10,16 @@ import {
   Image,
 } from "react-native";
 import axios from "axios";
+import { SwiperFlatList } from "react-native-swiper-flatlist";
+import { Dimensions } from "react-native";
 
 export const RoomScreen = ({ route }) => {
   const roomId = route.params.roomId;
 
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+
+  const windowHeight = Dimensions.get("window").height;
 
   useEffect(() => {
     try {
@@ -24,7 +28,7 @@ export const RoomScreen = ({ route }) => {
           `https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/rooms/${roomId}`
         );
         setData(response.data);
-        // console.log("response.data:", response.data);
+        console.log("response.data:", response.data);
 
         setIsLoading(false);
       };
@@ -38,30 +42,28 @@ export const RoomScreen = ({ route }) => {
     <ActivityIndicator />
   ) : (
     // <Button title="log" onPress={() => console.log(data.photos)} />
-
-    <>
-      <Text>testtt</Text>
-      <FlatList
+    <View style={styles.flatListContainer}>
+      <SwiperFlatList
+        index={0}
+        showPagination={true}
         data={data.photos}
         renderItem={({ item }) => {
           return (
-            <View>
+            <View style={[styles.child, { backgroundColor: item }]}>
               <Image
                 // style={styles.imageRoom}
                 source={{ uri: item.url }}
                 style={{
-                  width: 100,
-                  height: 100,
+                  // width: "100%",
+                  height: 500,
                   resizeMode: "contain",
                 }}
               />
-              <Text>{item.url}</Text>
-              <Text>Hello</Text>
             </View>
           );
         }}
       />
-    </>
+    </View>
 
     // <FlatList
     // data={response.data.photos}
@@ -69,9 +71,12 @@ export const RoomScreen = ({ route }) => {
     // <Image source={Item.photos.url}/>}
   );
 };
-
+const windowWidth = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   imageRoom: {
     resizeMode: "contain",
   },
+  child: { width: windowWidth, justifyContent: "center" },
+  text: { fontSize: 100, textAlign: "center" },
+  flatListContainer: { flex: 1, backgroundColor: "white" },
 });

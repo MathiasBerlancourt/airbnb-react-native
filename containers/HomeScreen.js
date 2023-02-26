@@ -22,7 +22,7 @@ export default function HomeScreen({ navigation }) {
   const [data, setData] = useState();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const { height, width, scale, fontScale } = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
   // const navigation = useNavigation();
 
   //USEEFFECT

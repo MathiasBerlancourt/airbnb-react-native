@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import { useState } from "react";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function SignUpScreen({ setToken }) {
   const [email, setEmail] = useState("mathias@mail.com");
@@ -68,65 +69,67 @@ export default function SignUpScreen({ setToken }) {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.mainContainer}>
-        <Image style={styles.logo} source={require("../assets/logo.png")} />
-        <TextInput
-          style={styles.input}
-          value={email}
-          onChangeText={(input) => {
-            setEmail(input);
-          }}
-          placeholder="Your email"
-        />
-        <TextInput
-          style={styles.input}
-          value={username}
-          onChangeText={(input) => {
-            setUsername(input);
-          }}
-          placeholder="Your username"
-        />
-        <TextInput
-          style={styles.input}
-          value={password}
-          onChangeText={(input) => {
-            setPassword(input);
-          }}
-          placeholder="Your password"
-          secureTextEntry="true"
-        />
-        <TextInput
-          style={styles.input}
-          value={confirmPassword}
-          onChangeText={(input) => {
-            setConfirmPassword(input);
-          }}
-          placeholder="Confirm your password"
-          secureTextEntry="true"
-          keyboardType="default"
-        />
-        <TextInput
-          style={styles.input}
-          value={description}
-          placeholder="useless placeholder"
-          onChangeText={(input) => {
-            setDescription(input);
-          }}
-        />
+    <KeyboardAwareScrollView>
+      <ScrollView>
+        <View style={styles.mainContainer}>
+          <Image style={styles.logo} source={require("../assets/logo.png")} />
+          <TextInput
+            style={styles.input}
+            value={email}
+            onChangeText={(input) => {
+              setEmail(input);
+            }}
+            placeholder="Your email"
+          />
+          <TextInput
+            style={styles.input}
+            value={username}
+            onChangeText={(input) => {
+              setUsername(input);
+            }}
+            placeholder="Your username"
+          />
+          <TextInput
+            style={styles.input}
+            value={password}
+            onChangeText={(input) => {
+              setPassword(input);
+            }}
+            placeholder="Your password"
+            secureTextEntry="true"
+          />
+          <TextInput
+            style={styles.input}
+            value={confirmPassword}
+            onChangeText={(input) => {
+              setConfirmPassword(input);
+            }}
+            placeholder="Confirm your password"
+            secureTextEntry="true"
+            keyboardType="default"
+          />
+          <TextInput
+            style={styles.input}
+            value={description}
+            placeholder="useless placeholder"
+            onChangeText={(input) => {
+              setDescription(input);
+            }}
+          />
 
-        <Text style={{ color: "red", marginTop: 5 }}>{error}</Text>
-        <TouchableOpacity
-          onPress={() => {
-            // alert("CLicked !");
-            submit();
-          }}
-          style={styles.btn}
-        >
-          <Text>Sign up</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+          <Text style={{ color: "red", marginTop: 5 }}>{error}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              // alert("CLicked !");
+              submit();
+            }}
+            style={styles.btn}
+          >
+            <Text>Sign up</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }
 
